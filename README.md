@@ -1,7 +1,7 @@
 Freta la - API
 ===============
 
-Este projeto é uma interface para a nossa API. A documentação está detalhada em [aqui][1]
+Este projeto é uma interface para a nossa API. A documentação da API está detalhada [neste link][apidocs].
 
 Uso
 ---
@@ -10,7 +10,7 @@ Todos os exemplos aqui citados estão em example.php:
 
 ### Instanciar objeto:
 É necessário instanciar a nossa classe para fazer qualquer chamada:
-```
+```php
 <?php
 require_once("fretalaAPI.php");
 
@@ -20,7 +20,7 @@ $settings = array(
 );
 ```
 ### Inserir Cartão:
-```
+```php
 <?php
 $card = array(
  "name" => "234",
@@ -32,19 +32,19 @@ $insertCardRtn  = $freta->insertCard($card);
 ```
 
 ### Deletar Cartão:
-```
+```php
 <?php
 $deleteCardRtn = $freta->deleteCard('car_2cc2750e0e6172cc24be429ee8e4e24af9a89973');
 ```
 
 ### Listar cartões:
-```
+```php
 <?php
 $getCardsRtn = $freta->getCards();
 ```
 
 ### Calcular rota:
-```
+```php
 <?php
 $route = array(
  "from" => array(
@@ -59,7 +59,7 @@ $costRtn = $freta->cost($route);
 ```
 
 ### Pedir frete:
-```
+```php
 <?php
 $frete = array(
  "id" => "MM8513110213",
@@ -81,5 +81,4 @@ $frete = array(
 $insertCardRtn  = $freta->insertCard($card);
 ```
 
-[aqui]:http://freta.la/apidocs/
-
+[apidocs]:http://freta.la/apidocs/
