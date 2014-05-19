@@ -33,7 +33,7 @@ $frete = array(
  )
 );
 
-$cost = array(
+$route = array(
  "from" => array(
    "number" => "234",
    "street" => "Rua Rio de Janeiro 653",
@@ -47,4 +47,4 @@ $insertCardRtn  = $freta->insertCard($card);
 $deleteCardRtn  = $freta->deleteCard('car_2cc2750e0e6172cc24be429ee8e4e24af9a89973');
 $getCardsRtn    = $freta->getCards();
 $insertFreteRtn = $freta->insertFrete($frete);
-$costRtn        = $freta->cost($cost);
+$costRtn        = $freta->cost($route);
