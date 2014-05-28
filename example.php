@@ -1,15 +1,17 @@
 <?php
 require_once("fretalaAPI.php");
 
-$settings = array(
-  "token" => "uvXTwX7Ub/t7aCGxDR3VTVO/GNBxHykhQC03DTjmvIY=",
-  "environment" => "sandbox"
+$auth = array(
+  "clientId" => "ecommerce",
+  "clientSecret" => "Q6eH4nxD",
+  "username" => "SEU_EMAIL_AQUI",
+  "password" => "SUA_SENHA_AQUI"
 );
 
-$freta = new FretalaAPI($settings);
+$freta = new FretalaAPI("sandbox", $auth);
 
 $card = array(
- "name" => "234",
+ "name" => "lucas lobosque",
  "number" => "4111111111111111",
  "cvv" => "123",
  "expDate" => "201812"
@@ -43,8 +45,11 @@ $route = array(
  "to" => "30140-122"
 );
 
-$insertCardRtn  = $freta->insertCard($card);
-$deleteCardRtn  = $freta->deleteCard('car_2cc2750e0e6172cc24be429ee8e4e24af9a89973');
-$getCardsRtn    = $freta->getCards();
-$insertFreteRtn = $freta->insertFrete($frete);
-$costRtn        = $freta->cost($route);
+//remova o comentário da chamada que quiser testar
+
+//$insertCardRtn  = $freta->insertCard($card);
+//$deleteCardRtn  = $freta->deleteCard('car_2cc2750e0e6172cc24be429ee8e4e24af9a89973');
+//$getCardsRtn    = $freta->getCards();
+//$insertFreteRtn = $freta->insertFrete($frete);
+//$costRtn        = $freta->cost($route);
+//$token = $freta->authenticate(); //no caso de precisar mandar uma token pro browser

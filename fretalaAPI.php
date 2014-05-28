@@ -8,48 +8,67 @@ class FretalaAPI {
   private $environment; 
   private $postfields;
   private $getfield;
+  private $clientId;
+  private $clientSecret;
+  private $username;
+  private $password;
   public $url;
 
-  public function __construct(array $settings) {
+  public function __construct($environment, array $settings) {
 
     if (!in_array("curl", get_loaded_extensions())) {
       throw new Exception("You need to install cURL, see: http://curl.haxx.se/docs/install.html");
     }
     
-    if (!isset($settings["token"])) {
-      throw new Exception("Token wasn\"t set");
-    }
-
-    if(!isset($settings["environment"])) {
+    if(!isset($environment)) {
       throw new Exception("environment wasn\"t set");
     }
 
-    if(!in_array($settings["environment"], array("sandbox", "production"))) {
+    if(!in_array($environment, array("sandbox", "production"))) {
       throw new Exception("environment must be production or sandbox");
     }
 
-    $this->token = $settings["token"];
-    $this->environment = $settings["environment"];
-    if($settings["environment"] == "production") {
+    $this->environment = $environment;
+    if($environment == "production") {
       $this->url = FRETALA_PRODUCTION_URL;
     } else {
       $this->url = FRETALA_SANDBOX_URL;
     }
+
+    $this->clientId = $settings["clientId"];
+    $this->clientSecret = $settings["clientSecret"];
+    $this->username = $settings["username"];
+    $this->password = $settings["password"];
+  }
+
+  public function authenticate() {
+    $data = array(
+      "grant_type" => "password",
+      "username" => $this->username,
+      "password" => $this->password
+    );
+    $res = $this->performRequest("POST", "/authenticate", json_encode($data), true);
+    $this->token = $res->access_token;
+    return $res->access_token;
   }
 
   public function getCards() {
+    $this->authenticate();
     return $this->performRequest("GET", "/cards");
   }
   
   public function insertCard($card) {
+    $this->authenticate();
     return $this->performRequest("POST", "/cards", json_encode($card));
   }
 
   public function deleteCard($cardToken) {
+    $this->authenticate();
     return $this->performRequest("DELETE", "/cards/".$cardToken);
   }
 
   public function insertFrete($frete) {
+    $this->authenticate();
     return $this->performRequest("POST", "/fretes", json_encode($frete));
   }
 
@@ -57,14 +76,17 @@ class FretalaAPI {
     return $this->performRequest("POST", "/fretes/cost", json_encode($cost));
   }
   
-  private function buildHeaders() {
-    $header = array();
-    $headers[] = "Authorization: Bearer " . $this->token;
+  private function buildHeaders($auth = false) {
+    $headers = array();
+    if($auth) {
+      $headers[] = "Authorization: Basic " . base64_encode($this->clientId.':'.$this->clientSecret);
+    } else if($this->token != "") {
+      $headers[] = "Authorization: Bearer " . $this->token;
+    }
     $headers[] = "Content-Type: application/json";
     return $headers;
   }
-    
-    
+
 /**
 * Perform the actual data retrieval from the API
 *
@@ -74,10 +96,9 @@ class FretalaAPI {
 *
 * @return string json If $return param is true, returns json data.
 */
-  private function performRequest($type, $path, $data=null) {
-    print_r($path);
+  private function performRequest($type, $path, $data=null, $auth=false) {
     $options = array(
-      CURLOPT_HTTPHEADER => $this->buildHeaders(),
+      CURLOPT_HTTPHEADER => $this->buildHeaders($auth),
       CURLOPT_HEADER => false,
       CURLOPT_URL => $this->url,
       CURLOPT_RETURNTRANSFER => true,
@@ -98,13 +119,15 @@ class FretalaAPI {
     curl_setopt_array($feed, $options);
     $json = json_decode(curl_exec($feed));
     $status = curl_getinfo($feed, CURLINFO_HTTP_CODE);
-    print_r($json);
-    echo($status);
-    if($status == 200) {
-    } else {
-      throw new Exception($json->message);
+    if($status != 200 && $status != 204) {
+      if($auth) {
+        throw new Exception($json->error_description);
+      } else {
+        throw new Exception($json->message);
+      }
     }
     curl_close($feed);
+    $this->token = '';
     return $json;
   }
 }
