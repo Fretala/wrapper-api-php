@@ -4,8 +4,8 @@ require_once("fretalaAPI.php");
 $auth = array(
   "clientId" => "ecommerce",
   "clientSecret" => "Q6eH4nxD",
-  "username" => "SEU_EMAIL_AQUI",
-  "password" => "SUA_SENHA_AQUI"
+  "username" => "YOUR_EMAIL_HERE",
+  "password" => "YOUR_PASSWORD_HERE"
 );
 
 $freta = new FretalaAPI("sandbox", $auth);

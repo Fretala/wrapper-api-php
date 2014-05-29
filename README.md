@@ -14,12 +14,19 @@ Todos os exemplos aqui citados estão em example.php:
 <?php
 require_once("fretalaAPI.php");
 
-$settings = array(
-  "token" => "uvXTwX7Ub/t7aCGxDR3VTVO/GNBxHykhQC03DTjmvIY=",
-  "environment" => "sandbox"
+$auth = array(
+  "clientId" => "ecommerce",
+  "clientSecret" => "Q6eH4nxD",
+  "username" => "YOUR_EMAIL_HERE",
+  "password" => "YOUR_PASSWORD_HERE"
 );
+
+$freta = new FretalaAPI("sandbox", $auth);
+
 ```
 ### Inserir Cartão:
+**Observação:** Recomendamos que esta operação seja feita diretamente do browser, utilizando nosso [wrapper em javascript]
+
 ```php
 <?php
 $card = array(
@@ -32,12 +39,14 @@ $insertCardRtn  = $freta->insertCard($card);
 ```
 
 ### Deletar Cartão:
+**Observação:** Recomendamos que esta operação seja feita diretamente do browser, utilizando nosso [wrapper em javascript]
 ```php
 <?php
 $deleteCardRtn = $freta->deleteCard('car_2cc2750e0e6172cc24be429ee8e4e24af9a89973');
 ```
 
 ### Listar cartões:
+**Observação:** Recomendamos que esta operação seja feita diretamente do browser, utilizando nosso [wrapper em javascript]
 ```php
 <?php
 $getCardsRtn = $freta->getCards();
@@ -82,3 +91,4 @@ $insertCardRtn  = $freta->insertCard($card);
 ```
 
 [apidocs]:http://freta.la/apidocs/
+[wrapper em javascript]:https://github.com/Fretala/wrapper-api-javascript
