@@ -1,7 +1,6 @@
 <?php
 
-define("FRETALA_SANDBOX_URL", "http://0.0.0.0:8080");
-//define("FRETALA_SANDBOX_URL", "https://sandbox.freta.la");
+define("FRETALA_SANDBOX_URL", "https://sandbox.freta.la");
 define("FRETALA_PRODUCTION_URL", "https://api.freta.la");
 
 class FretalaAPI {
@@ -40,6 +39,8 @@ class FretalaAPI {
     $this->clientSecret = $settings["clientSecret"];
     $this->username = $settings["username"];
     $this->password = $settings["password"];
+
+    $this->token = '';
   }
 
   public function authenticate() {
@@ -122,7 +123,6 @@ class FretalaAPI {
     $status = curl_getinfo($feed, CURLINFO_HTTP_CODE);
     if($status != 200 && $status != 204) {
       if($auth) {
-        print_r($json);
         throw new Exception($json->error_description);
       } else {
         throw new Exception($json->message);
