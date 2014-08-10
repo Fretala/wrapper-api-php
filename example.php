@@ -20,7 +20,6 @@ $card = array(
 $frete = array(
  "id" => "MM8513110213",
  "productValue" => "6000",
- "ccToken" => "car_d27f413bc5ba5acdcaed319838d3b971cd33478f",
  "from" => array(
    "number" => "234",
    "street" => "Rua Rio de Janeiro",
