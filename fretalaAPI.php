@@ -3,6 +3,10 @@
 define("FRETALA_SANDBOX_URL", "https://sandbox.freta.la");
 define("FRETALA_PRODUCTION_URL", "https://api.freta.la");
 
+class ValidationException extends Exception{}
+class BadRequestException extends Exception{}
+class InternalErrorException extends Exception{}
+
 class FretalaAPI {
   private $token;
   private $environment; 
@@ -122,10 +126,15 @@ class FretalaAPI {
     $json = json_decode(curl_exec($feed));
     $status = curl_getinfo($feed, CURLINFO_HTTP_CODE);
     if($status != 200 && $status != 204) {
-      if($auth) {
-        throw new Exception($json->error_description);
+      $err_msg = property_exists($json, 'message') ? $json->message : $json->error_description;
+      if($status == 422) {
+        throw new ValidationException($err_msg);
+      } else if($status = 400) {
+        throw new BadRequestException($err_msg);
+      } else if($status = 500) {
+        throw new InternalErrorException($err_msg);
       } else {
-        throw new Exception($json->message);
+        throw new Exception($err_msg);
       }
     }
     curl_close($feed);

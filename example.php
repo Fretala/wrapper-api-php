@@ -10,13 +10,6 @@ $auth = array(
 
 $freta = new FretalaAPI("sandbox", $auth);
 
-$card = array(
- "name" => "lucas lobosque",
- "number" => "4111111111111111",
- "cvv" => "123",
- "expDate" => "201812"
-);
-
 $frete = array(
  "id" => "MM8513110213",
  "productValue" => "6000",
@@ -46,9 +39,5 @@ $route = array(
 
 //remova o comentário da chamada que quiser testar
 
-//$insertCardRtn  = $freta->insertCard($card);
-//$deleteCardRtn  = $freta->deleteCard('car_2cc2750e0e6172cc24be429ee8e4e24af9a89973');
-//$getCardsRtn    = $freta->getCards();
 //$insertFreteRtn = $freta->insertFrete($frete);
 //$costRtn        = $freta->cost($route);
-//$token = $freta->authenticate(); //no caso de precisar mandar uma token pro browser
