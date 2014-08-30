@@ -108,7 +108,7 @@ class FretalaAPI {
       CURLOPT_HEADER => false,
       CURLOPT_URL => $this->url,
       CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_TIMEOUT => 10,
+      CURLOPT_TIMEOUT => 60,
       CURLOPT_URL => $this->url . $path
     );
 
@@ -129,9 +129,9 @@ class FretalaAPI {
       $err_msg = property_exists($json, 'message') ? $json->message : $json->error_description;
       if($status == 422) {
         throw new ValidationException($err_msg);
-      } else if($status = 400) {
+      } else if($status == 400) {
         throw new BadRequestException($err_msg);
-      } else if($status = 500) {
+      } else if($status == 500) {
         throw new InternalErrorException($err_msg);
       } else {
         throw new Exception($err_msg);

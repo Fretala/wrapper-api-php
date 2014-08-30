@@ -34,10 +34,11 @@ $route = array(
    "city" => "Belo Horizonte", 
    "state" => "Minas Gerais"
  ),
- "to" => "30140-122"
+ "to" => "30110-005"
 );
 
 //remova o comentário da chamada que quiser testar
 
 //$insertFreteRtn = $freta->insertFrete($frete);
-//$costRtn        = $freta->cost($route);
+$costRtn        = $freta->cost($route);
+print_r($costRtn);
