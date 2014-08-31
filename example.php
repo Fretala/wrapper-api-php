@@ -40,5 +40,6 @@ $route = array(
 //remova o comentário da chamada que quiser testar
 
 //$insertFreteRtn = $freta->insertFrete($frete);
+//$freteRtn = $freta->getFrete('MM8513110213');
 $costRtn        = $freta->cost($route);
 print_r($costRtn);

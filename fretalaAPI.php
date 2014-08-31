@@ -6,6 +6,7 @@ define("FRETALA_PRODUCTION_URL", "https://api.freta.la");
 class ValidationException extends Exception{}
 class BadRequestException extends Exception{}
 class InternalErrorException extends Exception{}
+class NotFoundException extends Exception{}
 
 class FretalaAPI {
   private $token;
@@ -61,6 +62,11 @@ class FretalaAPI {
   public function getCards() {
     $this->authenticate();
     return $this->performRequest("GET", "/cards");
+  }
+
+  public function getFrete($code) {
+    $this->authenticate();
+    return $this->performRequest("GET", "/fretes/code/".$code);
   }
   
   public function insertCard($card) {
@@ -125,6 +131,7 @@ class FretalaAPI {
     curl_setopt_array($feed, $options);
     $json = json_decode(curl_exec($feed));
     $status = curl_getinfo($feed, CURLINFO_HTTP_CODE);
+    print_r($status);
     if($status != 200 && $status != 204) {
       $err_msg = property_exists($json, 'message') ? $json->message : $json->error_description;
       if($status == 422) {
@@ -133,6 +140,8 @@ class FretalaAPI {
         throw new BadRequestException($err_msg);
       } else if($status == 500) {
         throw new InternalErrorException($err_msg);
+      } else if($status == 404) {
+        throw new NotFoundException($err_msg);
       } else {
         throw new Exception($err_msg);
       }
