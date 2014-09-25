@@ -14,6 +14,7 @@ $frete = array(
  "orderId" => "MM8513110213",
  "productValue" => "6000",
  "from" => array(
+   "name" => "Joaquim Pereira",
    "number" => "234",
    "street" => "Rua Rio de Janeiro",
    "city" => "Belo Horizonte", 
@@ -21,6 +22,7 @@ $frete = array(
    "cep" => "30160040"
  ),
  "to" => array(
+   "name" => "Juliana Silva",
    "number" => "2500",
    "street" => "Rua Timbiras 2500",
    "city" => "Belo Horizonte", 
