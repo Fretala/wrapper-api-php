@@ -11,19 +11,21 @@ $auth = array(
 $freta = new FretalaAPI("sandbox", $auth);
 
 $frete = array(
- "id" => "MM8513110213",
+ "orderId" => "MM8513110213",
  "productValue" => "6000",
  "from" => array(
    "number" => "234",
    "street" => "Rua Rio de Janeiro",
    "city" => "Belo Horizonte", 
-   "state" => "Minas Gerais"
+   "state" => "Minas Gerais",
+   "cep" => "30160040"
  ),
  "to" => array(
    "number" => "2500",
    "street" => "Rua Timbiras 2500",
    "city" => "Belo Horizonte", 
-   "state" => "Minas Gerais"
+   "state" => "Minas Gerais",
+   "cep" => "30140060"
  )
 );
 
