@@ -85,6 +85,7 @@ class FretalaAPI {
   }
 
   public function cost($cost) {
+    $this->authenticate();
     return $this->performRequest("POST", "/fretes/cost", json_encode($cost));
   }
   
