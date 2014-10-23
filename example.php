@@ -32,12 +32,7 @@ $frete = array(
 );
 
 $route = array(
- "from" => array(
-   "number" => "234",
-   "street" => "Rua Rio de Janeiro 653",
-   "city" => "Belo Horizonte", 
-   "state" => "Minas Gerais"
- ),
+ "from" => "31010-460",
  "to" => "30110-005"
 );
 
